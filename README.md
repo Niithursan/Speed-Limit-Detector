@@ -5,12 +5,12 @@ This project detects and reads speed limit signs using OpenCV and Tesseract OCR.
 ## Overview
 The program automatically locates digits within an image of a speed sign and uses OCR to recognize the speed value. It supports rectangular (North American) and orange construction zone signs.
 
-### Example:
+### Example: Put original Image file Name
 Input:  
-<img src="data/speed_scene.jpg" width="300"> Put original Image file Name
+<img src="data/speed_scene.jpg" width="300"> 
 
-Output:  
-<img src="results/speed_limit_result_robust.png" width="300"> will output image to results folder
+Output: Will Highlight speed state Maximum Speed 
+<img src="results/speed_limit_result_robust.png" width="300"> 
 
 Result: **MAX 50**
 
