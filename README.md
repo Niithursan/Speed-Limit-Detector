@@ -7,7 +7,7 @@ The program automatically locates digits within an image of a speed sign and use
 
 ### Example:
 Input:  
-<img src="data/speed_scene.jpg" width="300"> 
+<img src="data/110.jpg" width="300"> 
 
 Output:
 <img src="results/speed_limit_result_robust.png" width="300"> 
