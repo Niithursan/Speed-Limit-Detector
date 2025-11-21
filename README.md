@@ -24,7 +24,6 @@ This system automatically locates speed limit signs in street scenes and reads t
 
 ## How to Run
 
-### Option 1: Process a Batch of Images (Recommended)
 This will scan all images in your data folder and generate a report.
 
 1.  **Prepare Images:**
@@ -39,22 +38,6 @@ This will scan all images in your data folder and generate a report.
 3.  **Check Results:**
     * **Processed Images:** Go to the `results_batch/` folder to see the images with green boxes and speed labels.
     * **Data Report:** Open `experiment_results.csv` to see a table of all detected speeds and confidence scores.
-
-### Option 2: Test a Single Image
-If you want to test just one specific image without running the whole batch:
-
-1.  Open `batch_process.py` in your code editor.
-2.  Scroll to the bottom of the file.
-3.  Uncomment (remove the `#`) and edit the last line to look like this:
-    ```python
-    # Example:
-    run_detection_on_single_image("data/my_photo.jpg", "output_result.jpg")
-    ```
-4.  Run the script again:
-    ```bash
-    python batch_process.py
-    ```
-
 ---
 
 ## 📂 Project Structure
