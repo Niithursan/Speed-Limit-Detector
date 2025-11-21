@@ -1,6 +1,7 @@
 Image Name,Detected Speed,Confidence,Status
 100.jpg,100,94,Success
 110.jpg,110,79,Success
+120.JPG,120,96,Success
 25.jpeg,25,90,Success
 40.jpg,40,96,Success
 45.jpg,45,96,Success
