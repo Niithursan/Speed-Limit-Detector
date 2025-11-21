@@ -7,7 +7,6 @@ import re
 from pathlib import Path
 
 # --- CONFIGURATION ---
-# This matches the folder structure in your screenshot
 INPUT_FOLDER = "data"
 OUTPUT_FOLDER = "results_batch"
 CSV_REPORT = "experiment_results.csv"
@@ -22,7 +21,7 @@ VALID_SPEEDS = {
 # If Tesseract is not in your PATH, uncomment and fix this line:
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
-# --- HELPER FUNCTIONS (The "Brain") ---
+# --- HELPER FUNCTIONS ---
 
 def get_contrasted(gray):
     """Apply CLAHE to maximize contrast."""
