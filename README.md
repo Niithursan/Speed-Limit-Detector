@@ -37,7 +37,7 @@ This will scan all images in your data folder and generate a report.
 
 3.  **Check Results:**
     * **Processed Images:** Go to the `results_batch/` folder to see the images with green boxes and speed labels.
-    * **Data Report:** Open `experiment_results.csv` to see a table of all detected speeds and confidence scores.
+    * **Data Report:** Open `experiment_results.csv` to see a table of detected speeds, confidence scores, and the detection strategy used for each image.
 ---
 
 ## 📂 Project Structure
