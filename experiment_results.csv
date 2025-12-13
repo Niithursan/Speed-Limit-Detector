@@ -1,11 +1,11 @@
-Image Name,Detected Speed,Confidence,Status
-100.jpg,100,94,Success
-110.jpg,110,79,Success
-120.JPG,120,96,Success
-25.jpeg,25,90,Success
-40.jpg,40,96,Success
-45.jpg,45,96,Success
-80.jpg,N/A,0,Failed
-Sign.png,80,96,Success
-speed_scene.jpg,50,91,Success
-speed_scene.png,50,96,Success
+Image Name,Detected Speed,Confidence,Status,Strategy
+100.jpg,100,94,Success,Global Scan (Fallback)
+110.jpg,110,79,Success,Adaptive Contours
+120.JPG,120,96,Success,Global Scan (Fallback)
+25.jpeg,25,90,Success,Global Scan (Fallback)
+40.jpg,40,96,Success,Global Scan (Fallback)
+45.jpg,45,96,Success,Global Scan (Fallback)
+80.jpg,N/A,0,Failed,N/A
+Sign.png,80,96,Success,Adaptive Contours
+speed_scene.jpg,50,91,Success,Adaptive Contours
+speed_scene.png,50,96,Success,Adaptive Contours

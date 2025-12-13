@@ -143,7 +143,10 @@ def run_detection_on_single_image(img_path, out_path):
     img = cv2.imread(img_path)
     if img is None: 
         print(f"Could not load {img_path}")
-        return None, 0
+        return None, 0, "N/A"
+    
+    # Tracking which strategy succeeds
+    strategy = "N/A"
 
     # Strategy 1: Adaptive Contours
     candidates = isolate_rects(img)
@@ -159,6 +162,7 @@ def run_detection_on_single_image(img_path, out_path):
                 best_speed = speed
                 best_conf = conf
                 final_bbox = bbox
+                strategy = "Adaptive Contours"
 
     # Strategy 2: Global Scan (Fallback)
     if best_speed is None:
@@ -167,10 +171,11 @@ def run_detection_on_single_image(img_path, out_path):
         if res:
             best_speed, best_conf = res
             final_bbox = (0, 0, img.shape[1], img.shape[0])
+            strategy = "Global Scan (Fallback)"
 
     # Visualization
     vis = img.copy()
-    if best_speed:
+    if best_speed is not None:
         x, y, w, h = final_bbox
         cv2.rectangle(vis, (x, y), (x+w, y+h), (0, 255, 0), 4)
         
@@ -190,14 +195,14 @@ def run_detection_on_single_image(img_path, out_path):
         cv2.putText(vis, "FAIL", (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2)
 
     cv2.imwrite(out_path, vis)
-    return best_speed, best_conf
+    return best_speed, best_conf, strategy
 
 # --- BATCH PROCESSOR ---
 def process_batch():
     os.makedirs(OUTPUT_FOLDER, exist_ok=True)
     with open(CSV_REPORT, mode='w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(["Image Name", "Detected Speed", "Confidence", "Status"])
+        writer.writerow(["Image Name", "Detected Speed", "Confidence", "Status", "Strategy"])
 
         files = [f for f in os.listdir(INPUT_FOLDER) if f.lower().endswith(('.jpg', '.jpeg', '.png'))]
         print(f"Found {len(files)} images. Processing...")
@@ -205,10 +210,10 @@ def process_batch():
         for filename in files:
             img_path = os.path.join(INPUT_FOLDER, filename)
             out_path = os.path.join(OUTPUT_FOLDER, "result_" + filename)
-            speed, conf = run_detection_on_single_image(img_path, out_path)
+            speed, conf, strategy = run_detection_on_single_image(img_path, out_path)
             
-            status = "Success" if speed else "Failed"
-            writer.writerow([filename, speed if speed else "N/A", conf, status])
+            status = "Success" if speed is not None else "Failed"
+            writer.writerow([filename, speed if speed else "N/A", conf, status, strategy])
             print(f"Processed {filename}: {status} ({speed})")
 
 if __name__ == "__main__":
