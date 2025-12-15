@@ -107,24 +107,50 @@ def stitch_line(data):
     i = 0
     while i < n:
         text = data["text"][i].strip()
-        conf = int(data["conf"][i])
+        # Ensure confidence is an integer
+        try:
+            conf = int(data["conf"][i])
+        except (ValueError, TypeError):
+            conf = 0
 
-        # If we find a digit, look ahead to see if the next token is also a digit
-        # and is close by (same 'top' coordinate roughly)
         if text.isdigit() and conf > 30:
             current_num = text
             current_conf = conf
+            
+            # track index
+            prev_idx = i
 
-            # Look ahead logic
+            # logic for look-ahead
             j = i + 1
             while j < n:
                 next_text = data["text"][j].strip()
-                next_conf = int(data["conf"][j])
+                try:
+                    next_conf = int(data["conf"][j])
+                except (ValueError, TypeError):
+                    next_conf = 0
 
-                # Check if next token exists, is digit, and is on same line
-                if next_text.isdigit() and abs(data["top"][j] - data["top"][i]) < 10:
+                # ---GEOMETRY CALCULATION---
+                # 1. Vertical Alignment Check
+                y_aligned = abs(data["top"][j] - data["top"][i]) < 10
+
+                # 2. Horizontal Gap Check
+                x_prev_end = data["left"][prev_idx] + data["width"][prev_idx]
+                x_curr_start = data["left"][j]
+                gap = x_curr_start - x_prev_end
+                
+                # Dynamic Tolerance
+                # If the sign is huge (height=50px), we allow a gap of ~40px.
+                # If the sign is small (height=10px), we only allow ~8px.
+                char_height = data["height"][prev_idx]
+                gap_allowed = gap < (char_height * 0.8) # 0.8 is a generous multiplier for highway signs
+
+                # Check all conditions: Next is digit AND aligned vertically AND close horizontally
+                if next_text.isdigit() and y_aligned and gap_allowed:
                     current_num += next_text
                     current_conf = (current_conf + next_conf) // 2  # Avg confidence
+                    
+                    # Update prev_idx so the NEXT digit is compared to THIS one
+                    prev_idx = j 
                     j += 1
                 else:
                     break
